@@ -1,0 +1,12 @@
+{
+  "$schema": "https://claudemarketplaces.com/schema/marketplace.json",
+  "name": "Plex Research Claude Plugins",
+  "owner": {
+    "name": "Plex Research",
+    "url": "https://github.com/plex-research"
+  },
+  "description": "Claude Code plugins for the Plex Research platform",
+  "version": "1.0.0",
+  "pluginRoot": "plugins",
+  "plugins": []
+}
