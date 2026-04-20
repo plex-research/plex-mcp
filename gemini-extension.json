@@ -1,0 +1,6 @@
+{
+  "name": "plex-search",
+  "description": "Skills for using the Plex Search MCP server — entity resolution, scientific search, and AI-guided research analysis.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

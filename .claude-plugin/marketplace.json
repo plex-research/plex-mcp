@@ -1,12 +1,25 @@
 {
   "$schema": "https://claudemarketplaces.com/schema/marketplace.json",
-  "name": "Plex Research Claude Plugins",
+  "name": "Plex MCP",
   "owner": {
     "name": "Plex Research",
     "url": "https://github.com/plex-research"
   },
-  "description": "Claude Code plugins for the Plex Research platform",
+  "description": "LLM tool plugins for the Plex Search scientific research platform",
   "version": "1.0.0",
   "pluginRoot": "plugins",
-  "plugins": []
+  "plugins": [
+    {
+      "name": "plex-search",
+      "source": {
+        "source": "local",
+        "path": "./plugins/plex-search"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    }
+  ]
 }
