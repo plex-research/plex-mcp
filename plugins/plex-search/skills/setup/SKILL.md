@@ -37,7 +37,7 @@ Add an entry to `~/.claude.json` under `mcpServers`:
   "mcpServers": {
     "plex": {
       "type": "http",
-      "url": "https://plexsearch.com/mcp",
+      "url": "https://(tenant-id.)?plexsearch.com/mcp",
       "headers": {
         "x-api-key": "<their-api-key>"
       }
@@ -53,7 +53,7 @@ Add an entry to `~/.claude.json` under `mcpServers`:
   "mcpServers": {
     "plex": {
       "type": "http",
-      "url": "https://plexsearch.com/mcp"
+      "url": "https://(tenant-id.)?plexsearch.com/mcp"
     }
   }
 }
@@ -75,6 +75,5 @@ If the resolve tool returns results, setup is complete.
 |---|---|---|
 | Default (production) | — | `https://plexsearch.com/mcp` |
 | Acme Corp | `acme` | `https://acme.plexsearch.com/mcp` |
-| Merck KGaA | `merck-kgaa` | `https://merck-kgaa.plexsearch.com/mcp` |
 
 Replace with the customer's actual cell name. The cell name is provided during onboarding.
