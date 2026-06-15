@@ -75,6 +75,25 @@ search_analyst(query="Compare target overlap between these kinase inhibitors",
                limit_categories=["bioactivity", "target"])
 ```
 
+## Presenting Results — Citation and Evidence Preservation
+
+**Never summarize away citations, references, or evidence links from tool results.**
+
+Plex results contain structured evidence that users depend on to verify findings and trace back to source data. When presenting results:
+
+- **Preserve all citation IDs** (e.g. ChEMBL IDs, PubMed IDs, assay IDs, dataset references) exactly as returned — do not paraphrase or drop them
+- **Keep evidence links intact** — if a result includes a URL, Plex entity ID, or external reference, include it verbatim in your response
+- **Do not collapse multiple sources** into a vague summary ("several studies show...") — list each source cited by the tool
+- **Attribute claims to their source** — if the tool returns "IC50 = 5 nM [ChEMBL assay CHEMBL123456]", present the assay ID alongside the value
+
+**Wrong:**
+> Imatinib shows strong BCR-ABL inhibition with nanomolar potency across several published assays.
+
+**Right:**
+> Imatinib inhibits BCR-ABL with IC50 = 2.1 nM (ChEMBL assay CHEMBL1614364) and 4.8 nM (ChEMBL assay CHEMBL1614365).
+
+If the result set is large, summarize the pattern but still list the specific citations that support it — do not substitute a count ("12 assays") for the actual references unless the user explicitly asks for a summary only.
+
 ## Common Workflows
 
 ### Compound Investigation
