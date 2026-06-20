@@ -1,6 +1,6 @@
 # Plex MCP
 
-LLM tool plugins for the [Plex Search](https://plexsearch.com) scientific research platform.
+LLM-related utilities for the [Plex Search](https://plexsearch.com) scientific research platform.
 
 ## Quick Start
 
@@ -63,7 +63,13 @@ Settings → Connected Apps → add MCP server manually:
 | Production | `https://plexsearch.com/mcp` |
 | Customer cell | `https://<cell>.plexsearch.com/mcp` |
 
+> **Transport type:** This endpoint uses **Streamable HTTP** (`"type": "http"`), not SSE. If configuring manually, make sure your MCP client config uses `"type": "http"` — not `"type": "sse"`.
+
+
 ## Authentication
 
 - **API key**: `x-api-key` header
 - **OAuth**: no additional headers needed
+
+
+

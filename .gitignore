@@ -1,0 +1,5 @@
+# Un-ignore .claude-plugin dirs — needed for Anthropic plugin registry scanning
+!.claude-plugin/
+!.claude-plugin/**
+!plugins/**/.claude-plugin/
+!plugins/**/.claude-plugin/**
