@@ -20,6 +20,34 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Research"
+    },
+    {
+      "name": "plex-ops-tools",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://bitbucket.org/plexresearch/plex-search.git",
+        "path": "ops/claude"
+      },
+      "description": "Plex Research ops skills (Jenkins, Graylog, Sentry, PR review, infra, usage reporting) — each requires explicit user confirmation before being applied.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Ops"
+    },
+    {
+      "name": "plex-ops-cicd",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://bitbucket.org/plexresearch/plex-search.git",
+        "path": "ops/.claude"
+      },
+      "description": "Plex Research CI/CD deployment command reference skill — requires explicit user confirmation before being applied.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Ops"
     }
   ]
 }
