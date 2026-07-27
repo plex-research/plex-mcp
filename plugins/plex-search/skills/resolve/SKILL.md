@@ -96,7 +96,7 @@ compound returns `"id": "unichem:161671"`).
 
 3. search_analyst(query="Analyze kinase selectivity of sorafenib",
                   ids=[sorafenib_id])
-   # search_analyst may return a task stub — if so, poll with task_result(task_id=...)
+   # search_analyst returns a task stub immediately — poll with task_result(task_id=...)
 ```
 
 ### Batch resolution

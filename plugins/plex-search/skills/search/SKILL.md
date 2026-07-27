@@ -25,9 +25,8 @@ Use when the user wants to:
 **Key behaviors:**
 - Resolves entity names internally — no pre-resolution needed
 - Runs iterative search loops (resolve → search → analyze)
-- Long-running: typically 5–30 minutes, but complex queries may run for hours. Returns a task stub (not a blocking wait) if it doesn't finish within ~3 minutes — see "Polling long-running tasks" below
-- In practice, almost always returns a task stub on the first call — treat inline completion as the exception
-- Streams results in real-time when it responds synchronously (i.e., does not return a task stub)
+- Long-running: typically 5–30 minutes, but complex queries may run for hours
+- Returns a **task stub immediately** — poll via `task_result(task_id=<taskId>)` every 30–60 seconds
 
 **Parameters:**
 - `query` (required): natural language research question
@@ -53,7 +52,8 @@ Use when the user wants to:
 **Key behaviors:**
 - Requires valid Plex IDs — use `resolve` first
 - All IDs must be from the SAME category per call
-- Long-running: typically 1–2 minutes, but complex queries may run longer. Returns a task stub if it doesn't finish within ~3 minutes — see "Polling long-running tasks" below
+- Long-running: typically 1–2 minutes, but complex queries may run longer
+- Returns a **task stub immediately** — poll via `task_result(task_id=<taskId>)` every 30–60 seconds
 - Leads with most significant discovery, notes gaps
 
 **Parameters:**

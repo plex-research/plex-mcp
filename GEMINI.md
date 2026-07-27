@@ -25,14 +25,14 @@ Category notes:
 Match quality: `resolved-definitive` > `resolved` > `keyword` > `completion` > `fts`
 
 ### guide_agent
-Exploratory research assistant. Accepts natural language queries, resolves entities internally, runs iterative search loops. Long-running: typically 5–30 minutes, but complex queries may run for hours. If it doesn't complete within ~3 minutes, returns a task stub instead of blocking — see `task_result`. In practice, `guide_agent` almost always returns a task stub on the first call — treat inline completion as the exception.
+Exploratory research assistant. Accepts natural language queries, resolves entities internally, runs iterative search loops. Long-running: typically 5–30 minutes, but complex queries may run for hours. **Returns a task stub immediately — poll via `task_result`.**
 
 - `query`: natural language research question
 - `ids` (optional): pre-resolved Plex IDs
 - `limit_categories` (optional): restrict to specific data categories
 
 ### search_analyst
-Structured analysis over pre-executed search results. Requires valid Plex IDs from `resolve`. All IDs must be same category. Long-running: typically 1–2 minutes, but complex queries may run longer. If it doesn't complete within ~3 minutes, returns a task stub instead of blocking — see `task_result`.
+Structured analysis over pre-executed search results. Requires valid Plex IDs from `resolve`. All IDs must be same category. Long-running: typically 1–2 minutes, but complex queries may run longer. **Returns a task stub immediately — poll via `task_result`.**
 
 - `query`: what to analyze
 - `ids`: Plex IDs from resolve
@@ -45,7 +45,11 @@ Poll for the result of a long-running `guide_agent` or `search_analyst` call tha
 
 - `task_id`: the `taskId` from the task stub
 - Poll at most once every 60 seconds — don't tight-loop
-- If still `"working"` after 3 polls within the same turn, stop and let the user know
+- If still `"working"` after a few polls within the same turn, stop and let the user know rather than continuing to poll
+
+## Task Polling
+
+`guide_agent` and `search_analyst` return a task stub immediately: `{"taskId": "...", "status": "working", "message": "..."}`. Call `task_result(task_id=<taskId>)` every 30–60 seconds until you get a non-stub string result; after a few polls without completion, give the user the `taskId` and ask them to prompt again later.
 
 ## Workflows
 

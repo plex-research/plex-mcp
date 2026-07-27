@@ -68,6 +68,14 @@ Settings → Connected Apps → add MCP server manually:
 | `resolve` | Convert names/symbols/IDs to Plex IDs | — |
 | `task_result` | Poll for the result of a long-running `guide_agent`/`search_analyst` call that returned a task stub — poll at most once per 60s | — |
 
+> **Async task model:** `guide_agent` and `search_analyst` return a task stub immediately — `{"taskId": "...", "status": "working", "message": "..."}`. Call `task_result(task_id=<taskId>)` every 30–60 seconds to poll; after a few polls without completion, give the user the `taskId` and ask them to prompt again later.
+
+## MCP Prompts
+
+| Prompt | Description |
+|---|---|
+| `task_polling_instructions` | Explains the task stub / polling contract to the LLM client |
+
 ## Skills (Claude Code)
 
 | Skill | Command | Description |
