@@ -1,6 +1,6 @@
 # Plex MCP
 
-LLM-related utilities for the [Plex Search](https://plexsearch.com) scientific research platform.
+LLM tool plugins for the [Plex Search](https://plexsearch.com) scientific research platform.
 
 ## Quick Start
 
@@ -40,6 +40,25 @@ Settings → Connected Apps → add MCP server manually:
 - URL: `https://plexsearch.com/mcp` (or `https://<cell>.plexsearch.com/mcp`)
 - Type: HTTP
 
+### Claude Science
+
+1. **Settings → Connectors → Add connector → Remote**
+2. **Name:** `plex-search`
+3. **Server URL:** `https://plexsearch.com/mcp` (or `https://<cell>.plexsearch.com/mcp`)
+4. **Advanced settings:**
+   - **Transport:** `Streamable HTTP` — not SSE
+   - **Headers helper command:** a command that outputs the auth header:
+     ```bash
+     echo "x-api-key: $PLEX_API_KEY"
+     ```
+     Set `PLEX_API_KEY` in your shell environment first, or read from a file:
+     ```bash
+     echo "x-api-key: $(cat ~/.config/plex-search/api-key)"
+     ```
+5. Save the connector and verify it shows as connected.
+
+> **Why API key instead of OAuth?** OAuth tokens can fail to refresh after a Claude session sits idle — the API key header is regenerated fresh on each request, so there is no token to expire.
+
 ## MCP Tools
 
 | Tool | Use for | Needs resolve first? |
@@ -47,6 +66,7 @@ Settings → Connected Apps → add MCP server manually:
 | `guide_agent` | Exploratory natural language research questions | No (resolves internally) |
 | `search_analyst` | Structured analysis with evidence grounding | Yes |
 | `resolve` | Convert names/symbols/IDs to Plex IDs | — |
+| `task_result` | Poll for the result of a long-running `guide_agent`/`search_analyst` call that returned a task stub — poll at most once per 60s | — |
 
 ## Skills (Claude Code)
 
@@ -63,13 +83,11 @@ Settings → Connected Apps → add MCP server manually:
 | Production | `https://plexsearch.com/mcp` |
 | Customer cell | `https://<cell>.plexsearch.com/mcp` |
 
-> **Transport type:** This endpoint uses **Streamable HTTP** (`"type": "http"`), not SSE. If configuring manually, make sure your MCP client config uses `"type": "http"` — not `"type": "sse"`.
-
-
 ## Authentication
 
-- **API key**: `x-api-key` header
-- **OAuth**: no additional headers needed
+| Method | How |
+|---|---|
+| **API key** | Pass `x-api-key: <key>` header. Get a key: Account Settings → API Keys → Generate MCP key. |
+| **OAuth** | No additional headers needed — handled by your MCP client. |
 
-
-
+> **Recommendation for Claude Science:** use API key auth. OAuth tokens can silently fail to refresh after a session sits idle; the API key header is regenerated on every request.

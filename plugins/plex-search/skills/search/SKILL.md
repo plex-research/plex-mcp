@@ -25,8 +25,9 @@ Use when the user wants to:
 **Key behaviors:**
 - Resolves entity names internally — no pre-resolution needed
 - Runs iterative search loops (resolve → search → analyze)
-- Long-running: 60–300 seconds typical
-- Streams results in real-time
+- Long-running: typically 5–30 minutes, but complex queries may run for hours. Returns a task stub (not a blocking wait) if it doesn't finish within ~3 minutes — see "Polling long-running tasks" below
+- In practice, almost always returns a task stub on the first call — treat inline completion as the exception
+- Streams results in real-time when it responds synchronously (i.e., does not return a task stub)
 
 **Parameters:**
 - `query` (required): natural language research question
@@ -52,7 +53,7 @@ Use when the user wants to:
 **Key behaviors:**
 - Requires valid Plex IDs — use `resolve` first
 - All IDs must be from the SAME category per call
-- Long-running: 60–120 seconds typical
+- Long-running: typically 1–2 minutes, but complex queries may run longer. Returns a task stub if it doesn't finish within ~3 minutes — see "Polling long-running tasks" below
 - Leads with most significant discovery, notes gaps
 
 **Parameters:**
@@ -67,13 +68,27 @@ Use when the user wants to:
 **Example calls:**
 ```
 search_analyst(query="Analyze bioactivity profile of imatinib",
-               ids=["COMPOUND:chembl941"],
+               ids=["<imatinib Plex ID from resolve>"],
                sim_type="sim", sim_threshold=0.75)
 
 search_analyst(query="Compare target overlap between these kinase inhibitors",
-               ids=["COMPOUND:chembl941", "COMPOUND:chembl1421"],
+               ids=["<imatinib Plex ID>", "<dasatinib Plex ID>"],
                limit_categories=["bioactivity", "target"])
 ```
+
+Plex IDs are whatever `resolve` returns for that entity (observed live: e.g. `unichem:161671`
+for aspirin) — do not assume a fixed `COMPOUND:chemblNNN` scheme; always pull the `id` field
+from the `resolve` response rather than constructing it.
+
+## Polling Long-Running Tasks
+
+`guide_agent` and `search_analyst` return a task stub — `{"taskId": ..., "status": "working"}` —
+instead of blocking when a query doesn't complete within ~3 minutes.
+
+- Poll with `task_result(task_id="...")`
+- Poll at most once every 60 seconds — don't tight-loop
+- If still `"working"` after 3 polls within the same turn, stop and tell the user to prompt
+  again later rather than continuing to poll
 
 ## Presenting Results — Citation and Evidence Preservation
 

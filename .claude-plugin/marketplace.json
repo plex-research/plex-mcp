@@ -1,6 +1,6 @@
 {
   "$schema": "https://claudemarketplaces.com/schema/marketplace.json",
-  "name": "plex-mcp",
+  "name": "Plex MCP",
   "owner": {
     "name": "Plex Research",
     "url": "https://github.com/plex-research"

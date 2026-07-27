@@ -78,15 +78,25 @@ resolve(terms=["CC(=O)Oc1ccccc1C(=O)O"], category="compound")
 resolve(terms=["TP53"], category="gwps")
 ```
 
+## ID Format
+
+Plex IDs are opaque — always take the `id` field verbatim from the `resolve` response, never
+construct one from an external accession yourself. IDs are not a fixed `COMPOUND:chemblNNN`
+scheme; the category prefix depends on the underlying source (e.g. resolving "aspirin" as a
+compound returns `"id": "unichem:161671"`).
+
 ## Common Patterns
 
 ### Resolve → Search workflow
 ```
 1. resolve(terms=["sorafenib"], category="compound")
-   → returns id: "COMPOUND:chembl1336"
+   → returns id: "unichem:161671"  (observed example; always use the actual id field)
 
-2. search_analyst(query="Analyze kinase selectivity of sorafenib",
-                  ids=["COMPOUND:chembl1336"])
+2. sorafenib_id = result[0]["id"]
+
+3. search_analyst(query="Analyze kinase selectivity of sorafenib",
+                  ids=[sorafenib_id])
+   # search_analyst may return a task stub — if so, poll with task_result(task_id=...)
 ```
 
 ### Batch resolution
