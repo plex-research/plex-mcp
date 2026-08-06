@@ -1,5 +1,6 @@
 {
   "name": "plex-search",
+  "version": "1.0.0",
   "description": "Skills for using the Plex Search MCP server — entity resolution, scientific search, and AI-guided research analysis.",
   "author": {
     "name": "Plex Research",
